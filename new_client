@@ -1,0 +1,60 @@
+package client_controller;
+import java.io.*;
+public class data_clients {
+    boolean client_controller(String nickname) throws Exception{
+        String filename = "C:/java/text.txt";
+        Reader reader = new FileReader(filename);
+        BufferedReader br = new BufferedReader(reader);
+        int flag = 0;
+        while (br.ready()) {
+            String buf_string = br.readLine();
+            if (nickname.equals(buf_string)) {
+                return false;
+            }
+        }
+        reader.close();
+        br.close();
+        if (flag == 0) {
+            FileWriter writer = new FileWriter(filename, true);
+            writer.write("\r\n");
+            writer.write(nickname);
+            writer.close();
+        }
+        return true;
+    }
+    public static void main(String[] args) throws Exception{
+        String old_nickname="Sergey";
+        String new_nickname="Serega";
+        String filename = "C:/java/text.txt";
+        String new_filename = "C:/java/new_text.txt";
+        FileWriter writer = new FileWriter(new_filename);
+        Reader reader = new FileReader(filename);
+        BufferedReader br = new BufferedReader(reader);
+        while (br.ready()) {
+            String buf_string = br.readLine();
+            if (!old_nickname.equals(buf_string)) {
+                 writer.write(buf_string);
+                writer.write("\r\n");
+            }
+
+        }
+        reader.close();
+        br.close();
+        writer.close();
+        FileWriter new_writer = new FileWriter(filename, false);
+        FileReader new_reader = new FileReader(new_filename);
+        BufferedReader new_br = new BufferedReader(new_reader);
+        while (new_br.ready()) {
+            String buf_string = new_br.readLine();
+            new_writer.write(buf_string);
+            new_writer.write("\r\n");
+        }
+        new_writer.write(new_nickname);
+        new_writer.write("\r\n");
+        new_reader.close();
+        new_br.close();
+        new_writer.close();
+        File file = new File(new_filename);
+        file.delete();
+    }
+}
