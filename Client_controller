@@ -1,0 +1,30 @@
+package client_controller;
+import java.io.*;
+
+public class data_clients {
+
+    public static void main(String[] args) throws Exception{
+        String nickname="Sergey";
+        String filename="C:/java/text.txt";
+        Reader reader = new FileReader(filename);
+        BufferedReader br = new BufferedReader(reader);
+        int flag=0;
+        while (br.ready()) {
+            String buf_string=br.readLine();
+            if(nickname.equals(buf_string)){
+                System.out.println("Такой никнейм уже зарегистрирован.Пожалуйста,создайте другой");
+                flag=1;
+                break;
+            }
+        }
+        reader.close();
+        br.close();
+        if(flag==0) {
+            System.out.println("Вы вошли в чат под ником "+nickname);
+            FileWriter writer = new FileWriter(filename,true);
+            writer.write("\r\n");
+            writer.write(nickname);
+            writer.close();
+        }
+    }
+}
